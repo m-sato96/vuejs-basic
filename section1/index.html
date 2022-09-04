@@ -4,7 +4,45 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>vue.jsの基本</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+    <style>
+      a {
+        display: block;
+      }
+    </style>
   </head>
-  <body></body>
+  <body>
+    <!-- 仮想DOM -->
+    <div id="app">
+      {{ message }}
+      <a v-bind:href="google">google</a>
+      <!-- v-bind:hrefの省略形 → :href -->
+      <a :href="google">google省略系で記載</a>
+      <a :href="book.url">{{ book.title }}</a>
+      <!-- 複数の属性を操作する場合の書き方とその省略形 -->
+      <input type="text" :name="fromInput.name" :placeholder="fromInput.placeHolder" />
+      <!-- 属性名とキー名が一緒の際はこのようにその親のキー名をv-bindするだけでok -->
+      <input type="text" v-bind="fromInput" />
+    </div>
+    <script>
+      let app = new Vue({
+        el: "#app",
+        data() {
+          return {
+            message: "Hello Vue!",
+            google: "https://www.google.com/?hl=ja",
+            book: {
+              title: "本のタイトル",
+              url: "https://www.google.com/?hl=ja",
+            },
+            fromInput: {
+              name: "your_name",
+              placeHolder: "名前を入力してください",
+            },
+          };
+        },
+      });
+    </script>
+  </body>
 </html>
