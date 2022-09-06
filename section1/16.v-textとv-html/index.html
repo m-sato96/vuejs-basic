@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <p>{{ message }}</p>
+      <!-- jsでいうtextContent.基本的にこちらにする -->
+      <div v-text="test"></div>
+      <!-- jsでいうinnerHTML.悪意あるコードを許してしまうので危険 -->
+      <div v-html="test"></div>
+    </div>
+    <script>
+      const app = new Vue({
+        el: "#app",
+        data() {
+          return {
+            message: "Hello!!word",
+            test: "あああ<br>いいい",
+          };
+        },
+      });
+    </script>
+  </body>
+</html>

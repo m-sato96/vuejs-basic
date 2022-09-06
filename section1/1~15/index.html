@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>vue.jsの基本</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+    <style>
+      a {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 仮想DOM -->
+    <div id="app">
+      {{ message }}
+      <a v-bind:href="google">google</a>
+      <!-- v-bind:hrefの省略形 → :href -->
+      <a :href="google">google省略系で記載</a>
+      <a :href="book.url">{{ book.title }}</a>
+      <!-- 複数の属性を操作する場合の書き方とその省略形 -->
+      <input type="text" :name="fromInput.name" :placeholder="fromInput.placeHolder" />
+      <!-- 属性名とキー名が一緒の際はこのようにその親のキー名をv-bindするだけでok -->
+      <input type="text" v-bind="fromInput" />
+      <!-- styleの記述 -->
+      <div :style="{fontSize: fontSize}">Styleのテスト</div>
+      <div :class="{active:isActive}">クラスの付け替え</div>
+      <div v-show="isDisplay">表示</div>
+      <div v-show="!isDisplay">表示</div>
+      <div v-if="isDisplay">ifで表示</div>
+      <div v-if="signal === 'red'">赤</div>
+      <div v-else-if="signal === 'yellow'">黄</div>
+      <div v-else-if="signal === 'blue'">青</div>
+      <div v-else>どの色でもありません。</div>
+      <!-- 配列のループ -->
+      <ul>
+        <li v-for="member in members">{{ member }}</li>
+      </ul>
+      <!-- インデックスも出力する場合 -->
+      <ul>
+        <li v-for="(member, index) in members">{{ index }}:{{ member }}</li>
+      </ul>
+      <!-- オブジェクトのループ -->
+      <ul>
+        <li v-for="value in book">{{ value }}</li>
+      </ul>
+      <!-- オブジェクトのループ,キーも出力 第三引数も設定するとインデックス番号も取得できる-->
+      <ul>
+        <li v-for="(value, key, index) in book">{{ index }}:{{ key }}:{{ value }}</li>
+      </ul>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>タイトル</th>
+            <th>著者名</th>
+            <th>URL</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(book, key, index) in books" :key="book.id">
+            <td>{{ book.id }}</td>
+            <td>{{ book.title }}</td>
+            <td>{{ book.author }}</td>
+            <td>{{ book.url }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <script>
+      let app = new Vue({
+        el: "#app",
+        data() {
+          return {
+            message: "Hello Vue!",
+            google: "https://www.google.com/?hl=ja",
+            book: {
+              title: "本のタイトル",
+              author: "著者名",
+              url: "https://www.google.com/?hl=ja",
+            },
+            fromInput: {
+              name: "your_name",
+              placeHolder: "名前を入力してください",
+            },
+            fontSize: "20px",
+            isActive: false,
+            isDisplay: true,
+            signal: "red",
+            members: ["本多", "香川", "長友"],
+            books: [
+              {
+                id: 1,
+                title: "タイトル1",
+                author: "著者名1",
+                url: "https://www.google.com/?hl=ja",
+              },
+              {
+                id: 2,
+                title: "タイトル2",
+                author: "著者名2",
+                url: "https://www.google.com/?hl=ja",
+              },
+              {
+                id: 3,
+                title: "タイトル2",
+                author: "著者名3",
+                url: "https://www.google.com/?hl=ja",
+              },
+            ],
+          };
+        },
+      });
+    </script>
+  </body>
+</html>
