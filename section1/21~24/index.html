@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      {{ totalPriceMethod() }} {{ totalPriceMethod() }} {{ totalPrice }} {{ totalPrice }}
+      <!-- methodsでは記述した通り、2回とも実行されるが、
+      算出プロパティのcomputedはキャッシュされるので、値が変わらない限り、一度しか実行されない。 -->
+    </div>
+    <script>
+      let app = new Vue({
+        el: "#app",
+        data() {
+          return {
+            price: 1,
+            number: 1,
+            reactiveTest: {
+              name: "テスト",
+            },
+            books: [
+              {
+                id: 1,
+                title: "タイトル1",
+                author: "著者名1",
+                url: "https://www.google.com/?hl=ja",
+              },
+              {
+                id: 2,
+                title: "タイトル2",
+                author: "著者名2",
+                url: "https://www.google.com/?hl=ja",
+              },
+              {
+                id: 3,
+                title: "タイトル2",
+                author: "著者名3",
+                url: "https://www.google.com/?hl=ja",
+              },
+            ],
+          };
+        },
+        methods: {
+          totalPriceMethod() {
+            console.log("methodsです。");
+            return this.number * this.price;
+          },
+        },
+        computed: {
+          //computedとは算出プロパティ。
+          //必ずreturnで値を返す必要がある。そのreturnの中にはdata(){}にある値を必ず含める必要がある。
+          //computedでアロー関数を書いた場合、thisはコンポーネントインスタンスではなくなるが、直接、インスタンスを記述してアクセスできる
+          totalPrice: (app) => app.number * app.price,
+          /*
+          上記は下記コードの省略形。
+          totalPrice() {
+            return this.number * this.price;
+          },
+          参考：https://jp.vuejs.org/v2/api/#computed
+          */
+        },
+        watch: {
+          books: {
+            handler() {
+              console.log("変更されました。");
+            },
+            deep: true,
+          },
+        },
+        /*
+        watchとはキーが監視する評価式で、値が対応するコールバックをもつオブジェクトです。
+        キーの方にdataの値を取ります。今回ではbooksというdataをキーとして定義しました。
+        キーに記述したdataの値を監視し、変更された場合にhandler()が実行されます。
+        */
+      });
+
+      //thisの参照先
+      console.log(this); //グローバルスコープではthisはwindowオブジェクトを指す
+
+      const obj = {
+        test: function () {
+          console.log(this); //オブジェクト内に書いた場合thisはそのオブジェクト自身を返す。
+        },
+      };
+
+      const objArrow = {
+        test: () => {
+          console.log(this); //オブジェクトの中に書いていてもアロー関数で関数を定義した場合、thisはwindowオブジェクトを指す。
+        },
+      };
+    </script>
+  </body>
+</html>
