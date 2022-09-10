@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+  </head>
+  <style>
+    .fade-enter {
+      /* enterはbeforeの状態 */
+      opacity: 0;
+    }
+    .fade--enter-to {
+      /* enter-toはafterの状態 */
+      opacity: 1;
+    }
+    .fade-enter-active {
+      /* 上記二つの間 */
+      transition: opacity 1s;
+    }
+    .fade-leave {
+      opacity: 1;
+    }
+    .fade-leave-to {
+      opacity: 0;
+    }
+    .fade-leave-active {
+      transition: opacity 1s;
+    }
+  </style>
+  <body>
+    <div id="app">
+      <button @click="isShow = !isShow">表示切り替え</button>
+      <transition name="fade">
+        <!-- transitionタグには6種類のクラスによってトランジションを再現している。それらのクラスの接頭辞を任意につけることができる。name属性で記述した文字が接頭辞になる。 -->
+        <!-- 参考：https://jp.vuejs.org/v2/guide/transitions.html -->
+        <div v-show="isShow">テキストテキストテキスト</div>
+      </transition>
+    </div>
+    <script>
+      let app = new Vue({
+        el: "#app",
+        data() {
+          return {
+            isShow: false,
+          };
+        },
+      });
+    </script>
+  </body>
+</html>

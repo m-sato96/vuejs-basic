@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
+    <script src="https://kit.fontawesome.com/de8c11d082.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+    <link rel="stylesheet" href="app.css" />
+  </head>
+  <body>
+    <div id="app">
+      <section class="carousel">
+        <div class="carousel__main">
+          <transition name="active">
+            <div class="carousel__main" v-show="active === images[active].id" :key="images[active].id">
+              <img :src="images[active].img" alt="" />
+            </div>
+          </transition>
+        </div>
+        <div @click="prev" class="carousel__prev"><i class="fa-regular fa-circle-left fa-3x"></i></div>
+        <div @click="next" class="carousel__next"><i class="fa-regular fa-circle-right fa-3x"></i></div>
+        <ul class="carousel__thumbnails">
+          <li v-for="(image, id) in images" :key="image.id" :class="{current: active === image.id}" @click="current(image.id)">
+            <img :src="image.img" alt="" />
+          </li>
+        </ul>
+      </section>
+    </div>
+    <script>
+      let app = new Vue({
+        el: "#app",
+        data() {
+          return {
+            active: 0,
+            images: [
+              {
+                id: 0,
+                img: "images/img_1.jpg",
+              },
+              {
+                id: 1,
+                img: "images/img_2.jpg",
+              },
+              {
+                id: 2,
+                img: "images/img_3.jpg",
+              },
+            ],
+          };
+        },
+        methods: {
+          current(id) {
+            this.active = id;
+          },
+          prev() {
+            if (this.active <= 0) {
+              this.active = this.images.length - 1;
+            } else {
+              this.active--;
+            }
+          },
+          next() {
+            if (this.active >= this.images.length - 1) {
+              this.active = 0;
+            } else {
+              this.active++;
+            }
+          },
+        },
+        mounted() {
+          let that = this;
+          setInterval(() => {
+            that.next();
+          }, 4000);
+        },
+      });
+    </script>
+  </body>
+</html>
