@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <input :value="test" @input="test = $event.target.value" />
+      <!-- 
+      @input="test = $event.target.value"とは：
+      @inputは入力をされたタイミングで発火するイベント。 
+      test = $event.target.valueで、dataの中にあるtestプロパティの値に、イベントオブジェクトのtarget.valueの値を代入している。コンソールで開くとわかる。
+      -->
+      {{test}}
+      <br />
+      <input @input="chackEvent" />
+    </div>
+    <script>
+      let app = new Vue({
+        el: "#app",
+        data() {
+          return {
+            test: "ああ",
+          };
+        },
+        methods: {
+          chackEvent(e) {
+            //引数にeを書くとイベントオブジェクトを取ることができる
+            console.log(e);
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
