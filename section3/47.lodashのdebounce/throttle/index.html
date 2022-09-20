@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.20/lodash.min.js"></script>
+    <script>
+      // window.addEventListener("resize", () => {
+      //   console.log("リサイズしたよ");
+      // });
+      //上記だとリサイズするごとにすぐに発火するためサーバーの負荷がかかる
+      window.addEventListener(
+        "resize",
+        _.debounce(() => {
+          console.log("debounceでリサイズ");
+        }, 3000)
+      );
+      //_.debounce(コールバック関数,m秒)で第二引数に記述したm秒待ってからコールバック関数が実行されるようになる
+      window.addEventListener(
+        "resize",
+        _.throttle(() => {
+          console.log("throttleでリサイズ");
+        }, 3000)
+      );
+      //_.throttle(コールバック関数,m秒)で、最初は実行してから、第二引数に記述したm秒待ってからコールバック関数が実行されるようになる
+    </script>
+  </body>
+</html>

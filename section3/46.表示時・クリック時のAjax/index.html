@@ -5,12 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.20/lodash.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
   </head>
   <body>
     <div id="app">
       <button @click="getDogImage">画像を取得</button>
       <img :src="dogImage" alt="" />
+      <input type="text" v-model="watchTest" />
     </div>
     <script>
       const url = "https://dog.ceo/api/breeds/image/random";
@@ -22,7 +24,13 @@
         data() {
           return {
             dogImage: "",
+            watchTest: "",
           };
+        },
+        watch: {
+          watchTest() {
+            this.watchDogImage();
+          },
         },
         methods: {
           async getDogImage() {
@@ -33,6 +41,7 @@
         },
         created() {
           this.getDogImage();
+          this.watchDogImage = _.debounce(this.getDogImage, 1000);
         },
       });
     </script>
