@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+    <style>
+      .parent {
+        width: 800px;
+        margin: 0 auto;
+        border: 1px solid red;
+      }
+      .child {
+        width: 30%;
+        margin: 0 auto;
+        border: 1px solid blue;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app" class="parent">
+      <my-component title="テスト" class="child"></my-component>
+      <my-component :title="parentTitle" class="child"></my-component>
+      <my-component disabled class="child"></my-component>
+    </div>
+    <script>
+      let myComponent = {
+        template: `<div>
+          あああ
+          {{getTitle}}
+          <br>
+          <div v-show="isShow">表示</div>
+          </div>`,
+        props: {
+          title: {
+            type: String,
+          },
+          disabled: {
+            type: Boolean,
+            default: false,
+          },
+        },
+        data() {
+          return {
+            isShow: false,
+            getTitle: this.title,
+          };
+        },
+      };
+      let app = new Vue({
+        el: "#app",
+        components: {
+          myComponent,
+        },
+        data() {
+          return {
+            parentTitle: "親側のタイトル",
+          };
+        },
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+    <style>
+      .parent {
+        width: 800px;
+        margin: 0 auto;
+        border: 1px solid red;
+      }
+      .child {
+        width: 30%;
+        margin: 0 auto;
+        border: 1px solid blue;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app" class="parent">
+      <array-test v-for="member in members" :key="member.name" :item="member" class="child"></array-test>
+    </div>
+    <script>
+      let arrayTest = {
+        props: {
+          item: {
+            type: Object,
+          },
+        },
+        template: `<div>
+          <p>{{item.name}}</p>
+          </div>`,
+      };
+      let app = new Vue({
+        el: "#app",
+        components: {
+          arrayTest,
+        },
+        data() {
+          return {
+            members: [
+              {
+                name: "久保",
+              },
+              {
+                name: "南の",
+              },
+              {
+                name: "道安",
+              },
+            ],
+          };
+        },
+      });
+    </script>
+  </body>
+</html>
