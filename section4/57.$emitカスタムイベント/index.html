@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+    <style>
+      .parent {
+        width: 800px;
+        margin: 0 auto;
+        border: 1px solid red;
+      }
+      .child {
+        width: 30%;
+        margin: 0 auto;
+        border: 1px solid blue;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app" class="parent">
+      <emit-test @custom-event="parentMethod" class="child">
+        <!-- @custom-event="parentMethod" -> 子コンポーネントのメソッドで作成しているカスタムイベント名= 親コンポーネントのメソッド名 の形。 -->
+      </emit-test>
+    </div>
+    <script>
+      let emitTest = {
+        template: `<div>
+          <button @click="childMethod">子側のボタン</button>
+          </div>`,
+        methods: {
+          childMethod() {
+            this.$emit("custom-event", "子の値");
+            //第一引数は自由入力のカスタムイベント名。これを仮想DOMに記載する。 例）@click="childMethod"
+            //第二引数は親コンポーネントにあるメソッドに渡る引数
+          },
+        },
+      };
+      let app = new Vue({
+        el: "#app",
+        components: {
+          emitTest,
+        },
+        data() {
+          return {};
+        },
+        methods: {
+          parentMethod(e) {
+            console.log(e);
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
